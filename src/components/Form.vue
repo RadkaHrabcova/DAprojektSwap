@@ -1,17 +1,15 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    
+  <div>
+    <h1>formulář</h1>
+    <input type="text" v-model="jmeno">
     
   </div>
 </template>
 
 <script>
 export default {
-  name: "HelloWorld",
-  props: {
-    msg: String
-  }
+  
+ 
 };
 </script>
 
