@@ -22,6 +22,7 @@
                     <option value="obleceni">obleceni</option>
                     <option value="domacnost">domacnost</option>
                     <option value="jine">jine</option>
+                <select/>
             </li>
         </ul>
   </div>
