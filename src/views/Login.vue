@@ -1,20 +1,13 @@
 <template>
-  <div class="registration">
-        <form class="form-register" method="post" action="#">
+<div class="login">
+  <form class="form-login" method="post" action="#">
 
-            <div class="form-register-with-email">
+            <div class="form-log-in-with-email">
 
                 <div class="form-white-background">
 
                     <div class="form-title-row">
-                        <h1>Vytvoř si účet</h1>
-                    </div>
-
-                    <div class="form-row">
-                        <label>
-                            <span>Jméno</span>
-                            <input type="text" name="name">
-                        </label>
+                        <h1>Přihlaš se</h1>
                     </div>
 
                     <div class="form-row">
@@ -31,21 +24,15 @@
                         </label>
                     </div>
 
-                    
                     <div class="form-row">
-                        <label>
-                            <span>Heslo znovu</span>
-                            <input type="password" name="password">
-                        </label>
-                    </div>
-
-                    <div class="form-row">
-                        <button type="submit">Registrovat</button>
+                        <button type="submit">Přihlásit</button>
                     </div>
 
                 </div>
 
-                <router-link to="/prihlaseni" class="form-log-in-with-existing">Už máš u nás účet? Tady se můžeš přihlásit</router-link>
+                <a href="#" class="form-forgotten-password">Zapomenuté heslo?</a>
+                <router-link to="/registrace" class="form-create-an-account">Vytvoř si účet</router-link>
+                
 
             </div>
 
@@ -62,23 +49,20 @@
             </div>
 
         </form>
-
-    </div>
+</div>
 
 </template>
 
 <script>
-export default {
-  name: "Registration"
-}
 </script>
 
-<style scoped>
+<style>
+
 html{
     background-color: #f3f3f3;
 }
 
-.form-register{
+.form-login{
     max-width: 1000px;
     width: 100%;
     margin: 0 auto;
@@ -87,7 +71,7 @@ html{
     text-align: center;
 }
 
-.form-register-with-email{
+.form-log-in-with-email{
     position: relative;
     display: inline-block;
     vertical-align: top;
@@ -95,36 +79,36 @@ html{
     text-align: center;
 }
 
-.form-register-with-email .form-white-background{
+.form-log-in-with-email .form-white-background{
     width: 570px;
     box-sizing: border-box;
     background-color: #ffffff;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
     padding: 60px 80px;
-    margin-bottom: 35px;
+    margin-bottom: 32px;
 }
 
-.form-register-with-email .form-row{
+.form-log-in-with-email .form-row{
     text-align: left;
     margin-bottom: 23px;
 }
 
-.form-register-with-email .form-title-row{
+.form-log-in-with-email .form-title-row{
     text-align: center;
-    margin-bottom: 50px;
+    margin-bottom: 60px;
 }
 
-.form-register-with-email h1{
+.form-log-in-with-email h1{
     display: inline-block;
     box-sizing: border-box;
     color:  #4c565e;
     font-size: 24px;
-    padding: 0 20px 15px;
+    padding: 0 30px 15px;
     border-bottom: 2px solid #6caee0;
-    margin: 0;
+    margin:0;
 }
 
-.form-register-with-email .form-row > label span{
+.form-log-in-with-email .form-row > label span{
     display: inline-block;
     box-sizing: border-box;
     color:  #5f5f5f;
@@ -133,7 +117,7 @@ html{
     padding-right: 25px;
 }
 
-.form-register-with-email input{
+.form-log-in-with-email input{
     color:  #5f5f5f;
     box-sizing: border-box;
     width: 230px;
@@ -142,28 +126,7 @@ html{
     border: 1px solid #dbdbdb;
 }
 
-.form-register-with-email .form-checkbox input{
-    margin-left: 128px;
-    margin-right: 10px;
-    width: auto;
-    vertical-align: top;
-}
-
-.form-register-with-email .form-row .form-checkbox span{
-    font-size: 12px;
-    font-weight: normal;
-    display: inline-block;
-    text-align: left;
-    width: 220px;
-    margin: 0;
-}
-
-.form-register-with-email .form-checkbox span a{
-    text-decoration: none;
-    color:  #6caee0;
-}
-
-.form-register-with-email button{
+.form-log-in-with-email button{
     display: block;
     border-radius: 2px;
     background-color:  #6caee0;
@@ -176,15 +139,23 @@ html{
     cursor: pointer;
 }
 
-.form-register-with-email .form-log-in-with-existing{
+.form-log-in-with-email .form-forgotten-password,
+.form-log-in-with-email .form-create-an-account{
     text-decoration: none;
     padding: 4px 8px;
     font-weight: normal;
-    color: #7b9d62;
+}
+
+.form-log-in-with-email .form-forgotten-password{
+    color:  #4e9eda;
+}
+
+.form-log-in-with-email .form-create-an-account{
+    color:  #7b9d62;
     background-color: #d6f0c3;
 }
 
-.form-register-with-email:after{
+.form-log-in-with-email:after{
     content: 'NEBO';
     position: absolute;
     bottom: 330px;
@@ -195,7 +166,7 @@ html{
     width: 50px;
     height: 50px;
     color: #93923b;
-    font-size: 13px;
+    font-size: 17px;
     line-height: 50px;
 }
 
@@ -205,7 +176,7 @@ html{
     box-sizing: border-box;
     vertical-align: top;
     text-align: center;
-    margin-top: 100px;
+    margin-top: 70px;
 }
 
 .form-sign-in-with-social .form-title-row{
@@ -267,65 +238,65 @@ html{
 
 @media (max-width: 900px) {
 
-    .form-register{
+    .form-login{
         margin: 20px auto;
     }
 
-    .form-register-with-email{
+    .form-log-in-with-email{
         position: relative;
         display: block;
-        margin: 0;
+        margin: 0 0 50px;
     }
 
-    .form-register-with-email .form-white-background{
+    .form-log-in-with-email .form-white-background{
         margin: 0 auto 32px;
     }
 
-    .form-register-with-email:after{
+    .form-log-in-with-email:after{
         bottom: -80px;
         left: 50%;
         margin-left: -25px;
     }
 
-    .form-sign-in-with-social {
-        margin-top: 105px;
+    .form-sign-in-with-social{
+        margin-top: 60px;
     }
 
 }
 
 @media (max-width: 600px) {
 
-    .form-register-with-email .form-white-background{
+    .form-log-in-with-email .form-white-background{
         width: 300px;
         padding-left: 35px;
         padding-right: 35px;
     }
 
-    .form-register-with-email .form-row > label span{
+    .form-log-in-with-email .form-row > label span{
         display: block;
         text-align: left;
         padding: 0 0 10px;
     }
 
-    .form-register-with-email input{
+    .form-log-in-with-email .form-email,
+    .form-log-in-with-email .form-password{
         display: block;
         margin: 0 auto;
     }
 
-    .form-register-with-email .form-checkbox input{
-        display: inline-block;
-        margin-left: 0;
-    }
-
-    .form-register-with-email .form-checkbox span{
-        width: 200px !important;
-    }
-
-    .form-register-with-email:after{
+    .form-log-in-with-email:after{
         bottom: -80px;
         left: 50%;
         margin-left: -25px;
     }
 
+    .form-log-in-with-email .form-forgotten-password,
+    .form-log-in-with-email .form-create-an-account{
+        display: block;
+        margin: 5px auto;
+        max-width: 180px;
+    }
+
 }
+
 </style>
