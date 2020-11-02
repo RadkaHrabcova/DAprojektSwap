@@ -45,7 +45,7 @@
 
                 </div>
 
-                <router-link to="/prihlaseni" class="form-log-in-with-existing">Už máš u nás účet? Tady se můžeš přihlásit</router-link>
+                <a href="#" class="form-log-in-with-existing">Už máš u nás účet? Tady se můžeš přihlásit</a>
 
             </div>
 
