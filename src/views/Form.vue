@@ -34,7 +34,7 @@
                 <h2> PSČ</h2>
                 <input type="text" v-model="psc">
             
-                <h2> Vyměním za...</h2>
+                <h2> Vyměním za..</h2>
                 <textarea v-model="vymenim"></textarea>
 
                 <button>Přidat inzerát</button>
