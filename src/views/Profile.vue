@@ -1,19 +1,18 @@
 <template>
-    <div class="profile">
-        <h2>Profil</h2>
-
-        <div class="card horizontal" style="max-width:400px;margin:0 auto;" v-if="user">
-        <div class="card-image" style="margin-top:25px;margin-left:10px;"> 
-            <img :src="user.photoURL" style="width:75px;height:75px;border-radius:50%;border:4px solid #333" /> </div>
-        <div class="card-stacked">
-        <div class="card-content">
-         <p> name: <strong>{{user.displayName}}</strong><br />email:<strong>{{user.email}}</strong><br/>uid:
-                <strong>{{user.uid}}</strong> <br />provider: <strong
-                    class="teal-text">{{user.providerData[0].providerId}}</strong> 
-        </p>
+    <div class="profile" v-if="user">
+        <h4>{{userName}}</h4>
+        <div class="card horizontal" >
+            <div class="card-image"> 
+                <img :src="userPhoto"/> 
+            </div>
+            <div class="card-stacked">
+                <div class="card-content">
+                    <p>
+                        Email: {{userEmail}}
+                    </p>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
     </div>
 </template>
 
@@ -24,7 +23,11 @@ export default {
     name: "Profile",
     data() {
        return {
-           user: null
+           user: null,
+           userID: null,
+           userName: null,
+           userEmail: null,
+           userPhoto: null,
         };
     },
 
@@ -32,9 +35,37 @@ export default {
        firebase.auth().onAuthStateChanged(user => {
            if (user) {
                this.user = user;
+               this.userID = user.uid;
+               this.userName = user.displayName;
+               this.userEmail = user.email;
+               this.userPhoto = user.photoURL;
            }
        });
    }
 
 };
 </script>
+
+<style lang="css" scoped>
+.profile{
+    margin-bottom: 10px;
+    border-bottom: 1px solid black;
+}
+
+.card{
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.card-image{
+    margin-top: 25px;
+    margin-left: 10px;
+}
+
+.card-image img{
+    width: 85px;
+    height: auto;
+    border-radius: 50%;
+    border: 1px dotted black;
+}
+</style>

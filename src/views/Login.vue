@@ -1,5 +1,7 @@
 <template>
-    <div id="firebaseui-auth-container"></div>
+    <div class="login">
+        <div id="firebaseui-auth-container"></div>
+    </div>
 </template>
 
 <script>
@@ -13,7 +15,7 @@ export default {
         return {};
     },
     mounted() {
-        let ui = firebaseui.auth.AuthUI.getInstance();
+        let ui =  firebaseui.auth.AuthUI.getInstance();
         if (!ui) {
             ui = new firebaseui.auth.AuthUI(firebase.auth());
         }
@@ -22,7 +24,8 @@ export default {
             signInOptions: 
             [
             firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-            firebase.auth.EmailAuthProvider.PROVIDER_ID
+            firebase.auth.EmailAuthProvider.PROVIDER_ID,
+            firebase.auth.GoogleAuthProvider.PROVIDER_ID
             ]
         };
         ui.start("#firebaseui-auth-container", uiConfig);
