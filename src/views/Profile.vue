@@ -40,10 +40,24 @@ export default {
                this.userEmail = user.email;
                this.userPhoto = user.photoURL;
            }
-       });
-   }
+       })
+    },
 
-};
+    updated(){
+       fetch("http://127.0.0.1:5000/ad",{
+         method:"POST",
+         headers:{
+           "Content-Type":"application/json"
+         },
+         body:JSON.stringify({
+             userID: this.userID,
+             userName: this.userName,
+             userEmail: this.userEmail,
+             userPhoto: this.userPhoto
+         })
+       })
+    }
+}
 </script>
 
 <style lang="css" scoped>

@@ -7,14 +7,14 @@ import "firebase/auth";
 
 Vue.config.productionTip = false;
 
-var firebaseConfig = {
-  apiKey: "AIzaSyCnO4WL7nIv8L3ZkXgHk7mOh15LBH0sMOA",
-  authDomain: "swapito-ea322.firebaseapp.com",
-  databaseURL: "https://swapito-ea322.firebaseio.com",
-  projectId: "swapito-ea322",
-  storageBucket: "swapito-ea322.appspot.com",
-  messagingSenderId: "535557202142",
-  appId: "1:535557202142:web:2a3fe81ad7b320aaec624f"
+const firebaseConfig = {
+  apiKey: "AIzaSyCgRTV6jfjTad5e9FDjtIDWuWUcX6aEglk",
+  authDomain: "swapito-9e681.firebaseapp.com",
+  databaseURL: "https://swapito-9e681.firebaseio.com",
+  projectId: "swapito-9e681",
+  storageBucket: "swapito-9e681.appspot.com",
+  messagingSenderId: "713549805089",
+  appId: "1:713549805089:web:9ed0ceafe267549463d560"
 };
 
 firebase.initializeApp(firebaseConfig);
