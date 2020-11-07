@@ -9,6 +9,10 @@
       <br/>
       <router-link to="/profile" v-if="userIsSignedIn">profil</router-link>
       <router-link to="/login" v-else>přihlášení</router-link>
+     
+      <br/>
+      <router-link to="/allAds"><button>Zobraz všechny inzeráty</button></router-link>
+    
 </div>
 </template>
 

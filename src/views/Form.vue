@@ -7,35 +7,35 @@
                 <button>Vybrat soubor</button>
            
                 <h2> Vyberte typ</h2>
-                <input type="radio" name="typInzeratu" value="nabizim" v-model="typ">Nabízím
-                <input type="radio" name="typInzeratu" value="poptavam" v-model="typ">Poptávám
+                <input type="radio" name="typeOfAd" value="offer" v-model="type">Nabízím
+                <input type="radio" name="typeOfAd" value="request" v-model="type">Poptávám
            
                 <h2> Vyberte Kategorii</h2>
-                <select v-model="kategorie">
-                    <option value="kvetiny">Květiny</option>
-                    <option value="hracky">Hračky</option>
-                    <option value="obleceni">Oblečení</option>
-                    <option value="domacnost">Domácnost</option>
-                    <option value="jine">Jiné</option>
+                <select v-model="category">
+                    <option value="flowers">Květiny</option>
+                    <option value="toys">Hračky</option>
+                    <option value="clothes">Oblečení</option>
+                    <option value="household">Domácnost</option>
+                    <option value="others">Jiné</option>
                 </select>
           
                 <h2> Název produktu</h2>
-                <input type="text" v-model="nazev">
+                <input type="text" v-model="name">
           
                 <h2> Popis </h2>
-                <textarea v-model="popis"></textarea>
+                <textarea v-model="description"></textarea>
            
                 <h2> Ulice</h2>
-                <input type="text" v-model="ulice">
+                <input type="text" v-model="street">
             
                 <h2> Město</h2>
-                <input type="text" v-model="mesto">
+                <input type="text" v-model="city">
             
                 <h2> PSČ</h2>
-                <input type="text" v-model="psc">
+                <input type="text" v-model="zipCode">
             
                 <h2> Vyměním za..</h2>
-                <textarea v-model="vymenim"></textarea>
+                <textarea v-model="exchange"></textarea>
 
                 <button>Přidat inzerát</button>
             
@@ -46,14 +46,14 @@
 export default{
    data(){
        return{
-        typ:"nabizim",
-        kategorie:"domacnost",
-        nazev:"Dřevěná skříň...",
-        popis:"Zde popište zboží",  
-        ulice:"",
-        mesto:"",
-        psc:"",
-        vymenim:"Zde napište za co, chcete zboží vyměnit",
+        type:"nabizim",
+        category:"domacnost",
+        name:"Dřevěná skříň...",
+        description:"Zde popište zboží",  
+        street:"",
+        city:"",
+        zipCode:"",
+        exchange:"Zde napište za co, chcete zboží vyměnit",
 
         
        };

@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import Form from '../views/Form.vue'
 import Profile from '../views/Profile.vue'
 import Login from '../views/Login.vue'
+import AllAds from '../views/AllAds.vue'
 
 Vue.use(VueRouter)
 
@@ -27,6 +28,11 @@ const routes = [
         path: '/login',
         name: 'Login',
         component: Login
+      },
+      {
+        path: '/allAds',
+        name: 'AllAds',
+        component: AllAds
       },
 ]
 
