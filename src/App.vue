@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <navbar/>
    <router-link to="/">Domů</router-link>
    <hr>
     <router-view/>
@@ -9,7 +10,13 @@
 </template>
 
 <script>
+import Navbar from './views/Navbar.vue'
 
+export default {
+    components: {
+    navbar: Navbar,
+  }
+}
 
 </script>
 

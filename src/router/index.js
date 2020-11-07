@@ -2,7 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Form from '../views/Form.vue'
-import Registration from '../views/Registration.vue'
+import Profile from '../views/Profile.vue'
+import Login from '../views/Login.vue'
 
 Vue.use(VueRouter)
 
@@ -18,9 +19,14 @@ const routes = [
         component: Form
       },
       {
-        path: '/registrace',
-        name: 'Registration',
-        component: Registration
+        path: '/profile',
+        name: 'Profile',
+        component: Profile
+      },
+      {
+        path: '/login',
+        name: 'Login',
+        component: Login
       },
 ]
 

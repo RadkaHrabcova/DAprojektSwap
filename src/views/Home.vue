@@ -3,10 +3,47 @@
       <p>home swapito</p>
       <router-link to="/form">přidej formulář</router-link>
       <br/>
-      <router-link to="/registrace">registrace</router-link>
-    
+      <br/>
+      <button v-if="userIsSignedIn" @click="signOut">Logout</button>
+      <br/>
+      <br/>
+      <router-link to="/profile" v-if="userIsSignedIn">profil</router-link>
+      <router-link to="/login" v-else>přihlášení</router-link>
 </div>
 </template>
+
+<script>
+import firebase from "firebase/app";
+
+export default {
+  name: "Home",
+
+      data() {
+       return {
+           user: null,
+           userIsSignedIn: false,
+        };
+    },
+
+  created() {
+       firebase.auth().onAuthStateChanged(user => {
+           if (user) {
+               this.user = user;
+              this.userIsSignedIn = true;
+           } 
+       });
+  },
+  
+  methods: {
+    signOut() {
+        firebase.auth().signOut();
+        this.$router.push({
+            name: "Login"
+        });
+    }
+  }
+}
+</script>
 
 <style>
  
