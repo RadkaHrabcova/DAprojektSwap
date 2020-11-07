@@ -1,5 +1,5 @@
 <template>
-  <form class="inzerat" method="POST" action="">
+  <form @submit.prevent="sendData" class="inzerat" method="POST" action="http://127.0.0.1:5000/ad">
     <h1>Detail inzerátu</h1>
         
             
@@ -58,6 +58,27 @@ export default{
         
        };
    },
+   methods:{
+     sendData(){
+       fetch("http://127.0.0.1:5000/ad",{
+         method:"POST",
+         headers:{
+           "Content-Type":"application/json"
+         },
+         body:JSON.stringify({
+           type:this.type,
+           category:this.category,
+           name:this.name,
+           description:this.description,
+           street:this.street,
+           city:this.city,
+           zipCode:this.zipCode,
+           exchange:this.exchange
+         })
+       })
+     }
+   }
+
        
     
 

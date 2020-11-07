@@ -4,7 +4,7 @@
     
    <ul id="adds">
   <li v-for="ad in ads" :key="ad.id">
-    {{ ad.author }} - {{ad.title}} - {{ad.content}}
+    {{ ad.author }} - {{ad.name}} - {{ad.content}}
   </li>
 </ul>
   </div>
