@@ -1,7 +1,7 @@
 <template>
   <div class="home">
       <p>home swapito</p>
-      <router-link to="/form">přidej formulář</router-link>
+      <router-link to="/form">přidej inzerát</router-link>
       <br/>
       <br/>
       <button v-if="userIsSignedIn" @click="signOut">Logout</button>

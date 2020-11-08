@@ -43,7 +43,7 @@ export default {
        })
     },
 
-    updated(){
+ /*   updated(){
        fetch("http://127.0.0.1:5000/ad",{
          method:"POST",
          headers:{
@@ -56,7 +56,7 @@ export default {
              userPhoto: this.userPhoto
          })
        })
-    }
+    }*/
 }
 </script>
 
