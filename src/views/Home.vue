@@ -1,15 +1,13 @@
 <template>
   <div class="home">
       <p>home swapito</p>
-      <router-link to="/form">přidej inzerát</router-link>
+      <router-link to="/form">Přidej inzerát</router-link>
       <br/>
       <br/>
-      <button v-if="userIsSignedIn" @click="signOut">Logout</button>
-      <br/>
-      <br/>
+      <button v-if="userIsSignedIn" @click="signOut">Odhlásit se</button>
       <router-link to="/profile" v-if="userIsSignedIn">profil</router-link>
-      <router-link to="/login" v-else>přihlášení</router-link>
-     
+      <router-link to="/login" v-else>Přihlásit se</router-link>
+      <br/>
       <br/>
       <router-link to="/allAds"><button>Zobraz všechny inzeráty</button></router-link>
     
