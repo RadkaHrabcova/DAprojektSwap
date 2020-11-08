@@ -1,10 +1,12 @@
 <template>
   <div class="AllAds">
-    <p>Zde jsou všechny inzeráty</p>
+    <h1>Zde jsou všechny inzeráty</h1>
     
    <ul id="adds">
   <li v-for="ad in ads" :key="ad.id">
-    {{ ad.author }} - {{ad.name}} - {{ad.content}}
+    <h2>{{ad.name}}</h2>
+    <p>{{ad.type}}</p>
+    <p>{{ad.description}}</p>
   </li>
 </ul>
   </div>
@@ -46,4 +48,6 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+
+</style>
