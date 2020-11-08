@@ -1,5 +1,6 @@
 <template>
     <div class="profile" v-if="user">
+        <router-link to="/profileUpdate">Update profil</router-link>
         <h4>{{userName}}</h4>
         <div class="card horizontal" >
             <div class="card-image"> 
