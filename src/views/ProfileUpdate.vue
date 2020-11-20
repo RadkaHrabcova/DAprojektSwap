@@ -1,22 +1,22 @@
 <template>
   <div class="profile_update">
     <form @submit.prevent="updateProfile">
-                <h2>Uživatelské jméno: </h2>
-                <input type="text" v-model="userProfile.userName">
-                <h2>Email: </h2>
-                <input type="text" v-model="userProfile.userEmail">
-                <h2>Photo: </h2>
-                <input type="text" v-model="userProfile.userPhoto">                
+      <h2>Uživatelské jméno:</h2>
+      <input type="text" v-model="userProfile.userName" />
+      <h2>Email:</h2>
+      <input type="text" v-model="userProfile.userEmail" />
+      <h2>Photo:</h2>
+      <input type="text" v-model="userProfile.userPhoto" />
 
-                <h2>Lokalita: </h2>
-                <input type="text" v-model="userProfile.userLocation">
-                <h2> Hledám: </h2>
-                <textarea v-model="userProfile.searches"></textarea>
-                <h2> Nabízím: </h2>
-                <input type="text" v-model="userProfile.offers">
-                <br/>
-                <br/>
-                <button>Update</button>
+      <h2>Lokalita:</h2>
+      <input type="text" v-model="userProfile.userLocation" />
+      <h2>Hledám:</h2>
+      <textarea v-model="userProfile.searches"></textarea>
+      <h2>Nabízím:</h2>
+      <input type="text" v-model="userProfile.offers" />
+      <br />
+      <br />
+      <button>Update</button>
     </form>
   </div>
 </template>
@@ -27,19 +27,19 @@
 export default {
   name: "ProfileUpdate",
 
-  data(){
-       return{
-        userProfile: {},
-        userName: "",
-        userEmail: "",
-        userPhoto: "",
-        userLocation:"",
-        searches:"",
-        offers: "",
-       };
-   },
+  data() {
+    return {
+      userProfile: {},
+      userName: "",
+      userEmail: "",
+      userPhoto: "",
+      userLocation: "",
+      searches: "",
+      offers: ""
+    };
+  }
 
-/*    methods:{
+  /*    methods:{
       fetchProfile() {
         fetch("http://127.0.0.1:5000/user/2wh6IXQRLfOBOLkXW2dXOydS06c2")
           .then((response) => {
@@ -89,10 +89,7 @@ export default {
   created(){
     this.fetchProfile();
   } */
-
-}
+};
 </script>
 
-<style>
-
-</style>
+<style></style>
