@@ -4,6 +4,7 @@
 
     <ul id="adds">
       <li v-for="ad in ads" :key="ad.id">
+        <img :src="ad.picture" />
         <h2>{{ ad.name }}</h2>
         <p>{{ ad.type }}</p>
         <p>{{ ad.description }}</p>
@@ -11,40 +12,38 @@
     </ul>
   </div>
 </template>
+
 <script>
+import firebase from "firebase";
+
 export default {
   data() {
     return {
-      ads: []
+      ads: [],
     };
   },
   methods: {
     fetchAds() {
       fetch("http://127.0.0.1:5000/ads")
-        .then(response => {
-          // ze serveru přišla odpověď
+        .then((response) => {
           if (response.ok) {
-            // vše je ok, stáhneme zbytek zprávy jako JSON
             return response.json();
           } else {
-            // dostali jsme odpověď, ale na serveru došlo k chybě
             throw Error("Něco je špatně");
           }
         })
-        .then(json => {
-          // vypsání výsledku
+        .then((json) => {
           this.ads = json;
         })
-        .catch(error => {
-          // vypsání chyby
+        .catch((error) => {
           this.ads = error;
         });
-    }
+    },
   },
   created() {
     console.log("created");
     this.fetchAds();
-  }
+  },
 };
 </script>
 
