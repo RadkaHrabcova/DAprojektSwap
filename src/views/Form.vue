@@ -1,61 +1,186 @@
 <template>
-  <form @submit.prevent="sendData" class="inzerat">
-    <h1>Detail inzerátu</h1>
+  <form @submit.prevent="sendData" class="ad">
+    <h2>Přidej inzerát</h2>
 
-    <h2>Vyberte foto</h2>
+  <v-stepper
+    v-model="e6"
+    vertical
+  >
+    <v-stepper-step
+      :complete="e6 > 1"
+      step="1"
+    >
+      Nahraj foto nebo obrázek
+    </v-stepper-step>
 
-    <div>
-      <input type="file" @change="previewImage" accept="image/*" />
-    </div>
-    <div>
-      <p>
-        {{ uploadValue.toFixed() + "%" }}
-        <progress id="progress" :value="uploadValue" max="100"></progress>
-      </p>
-    </div>
-    <div v-if="imageData != null">
-      <img class="preview" :src="picture" />
-      <br />
-      <button @click="onUpload">Upload</button>
-    </div>
+    <v-stepper-content step="1">
+      <v-card
+        height="150px">
+        <v-card-text>
+          <v-file-input
+            v-model="picture"
+            counter
+            label="Foto"
+            multiple
+            prepend-icon="mdi-paperclip"
+            placeholder="Vyberte ze složky"
+            outlined
+            :show-size="1000"
+            @change="previewImage" 
+            accept="image/*" 
+                >
+            <template v-slot:selection="{ index, text }">
+              <v-chip
+                v-if="index < 2"
+                color="light-green darken-1"
+                dark
+                label
+                small
+                    >
+                {{ text }}
+              </v-chip>
 
-    <h2>Vyberte typ</h2>
-    <input type="radio" name="typeOfAd" value="offer" v-model="type" />Nabízím
-    <input
-      type="radio"
-      name="typeOfAd"
-      value="request"
-      v-model="type"
-    />Poptávám
+              <span
+                v-else-if="index === 2"
+                class="overline grey--text text--darken-3 mx-2"
+              >
+                +{{ picture.length - 2 }} File(s)
+              </span>
+            </template>
+          </v-file-input>
 
-    <h2>Vyberte Kategorii</h2>
-    <select v-model="category">
-      <option value="flowers">Květiny</option>
-      <option value="toys">Hračky</option>
-      <option value="clothes">Oblečení</option>
-      <option value="household">Domácnost</option>
-      <option value="others">Jiné</option>
-    </select>
+        <!--     <div>
+              <p>
+                {{ uploadValue.toFixed() + "%" }}
+                <progress id="progress" :value="uploadValue" max="100"></progress>
+              </p>
+            </div>
+            <div v-if="imageData != null">
+              <img class="preview" :src="picture" />
+              <br />
+              <button @click="onUpload">Upload</button>
+            </div> -->
+        </v-card-text>
+      </v-card>
 
-    <h2>Název produktu</h2>
-    <input type="text" v-model="name" />
+      <v-btn
+        color="primary"
+        @click="e6 = 2"
+      >
+        Pokračovat
+      </v-btn>
+    </v-stepper-content>
 
-    <h2>Popis</h2>
-    <textarea v-model="description"></textarea>
+    <v-stepper-step
+      :complete="e6 > 2"
+      step="2"
+    >
+      Doplň další informace
+    </v-stepper-step>
 
-    <h2>Ulice</h2>
-    <input type="text" v-model="street" />
+    <v-stepper-content step="2">
+      <v-card>
+        <v-card-text>
+      <v-container fluid>
+        <v-radio-group
+          v-model="type"
+          row
+          mandatory
+        >
+          <v-radio
+            label="Nabízím"
+            value="offer"
+          ></v-radio>
+          <v-radio
+            label="Poptávám"
+            value="request"
+          ></v-radio>
+        </v-radio-group>
+      </v-container>
+        <v-select
+          v-model="category"
+          :items="categories"
+          label="Zvolte kategorii"
+          multiple
+          chips
+          outlined
+        ></v-select>
 
-    <h2>Město</h2>
-    <input type="text" v-model="city" />
+        <v-text-field
+          v-model="name"
+          label="Název produktu"
+          outlined
+          clearable
+        ></v-text-field>
 
-    <h2>PSČ</h2>
-    <input type="text" v-model="zipCode" />
+        <v-textarea
+          v-model="description"
+          label="Popis produktu"
+          counter
+          maxlength="120"
+          full-width
+          outlined
+          hint="Zde zadejte, co hledáte nebo nabízíte"
+        ></v-textarea>
 
-    <h2>Vyměním za..</h2>
-    <textarea v-model="exchange"></textarea>
+        <v-text-field
+          v-model="location"
+          label="Lokalita"
+          outlined
+          clearable
+        ></v-text-field>
 
-    <button>Přidat inzerát</button>
+        </v-card-text>
+      </v-card>
+      <v-btn
+        color="primary"
+        @click="e6 = 3"
+      >
+        Pokračovat
+      </v-btn>
+      <v-btn 
+      @click="e6--"
+      text>
+        Zpět
+      </v-btn>
+    </v-stepper-content>
+
+    <v-stepper-step
+      :complete="e6 > 3"
+      step="3"
+    >
+      Co za to?
+    </v-stepper-step>
+
+    <v-stepper-content step="3">
+      <v-card>
+        <v-card-text>  
+          <v-text-field
+            v-model="exchange"
+            label="Výměním za.."
+            outlined
+            clearable
+          ></v-text-field>
+        </v-card-text>
+      </v-card>
+
+      <v-btn
+        color="primary"
+        @click="e6 = 4"
+      >
+        Continue
+      </v-btn>
+      <v-btn
+      @click="e6--"
+       text>
+        Zpět
+      </v-btn>
+    </v-stepper-content>
+  </v-stepper>
+    <v-btn
+      outlined
+      color="#7CB342"
+    >Přidat inzerát</v-btn>
   </form>
 </template>
 
@@ -65,17 +190,17 @@ import firebase from "firebase";
 export default {
   data() {
     return {
-      type: "nabizim",
-      category: "domacnost",
-      name: "Dřevěná skříň...",
-      description: "Zde popište zboží",
-      street: "",
-      city: "",
-      zipCode: "",
-      exchange: "Zde napište za co, chcete zboží vyměnit",
+      type: "",
+      category: [],
+      categories:["Květiny", "Hračky", "Oblečení", "Domácnost"],
+      name: "",
+      description: "",
+      location: "",
+      exchange: "",
       imageData: null,
       picture: null,
-      uploadValue: 0
+      uploadValue: 0,
+      e6: 1
     };
   },
   methods: {
@@ -90,9 +215,6 @@ export default {
           category: this.category,
           name: this.name,
           description: this.description,
-          street: this.street,
-          city: this.city,
-          zipCode: this.zipCode,
           exchange: this.exchange,
           imageData: this.imageData,
           picture: this.picture,
@@ -137,5 +259,9 @@ export default {
 <style>
 img.preview {
   width: 200px;
+}
+
+.ad{
+  margin: 10px;
 }
 </style>

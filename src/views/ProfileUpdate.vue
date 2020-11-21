@@ -1,25 +1,31 @@
 <template>
   <div class="profile_update">
-    <h1></h1>
+    <h2>Aktualizace profilu</h2>
     <form class="form" @submit.prevent="updateProfile">
       <v-text-field
-            v-model="userProfile.userName"
+            v-model="userName"
+            :error-messages="nameErrors"
             label="Uživatelské jméno"
             outlined
             clearable
             prepend-icon="mdi-account"
+            @input="$v.userName.$touch()"
+            @blur="$v.userName.$touch()"
           ></v-text-field>
 
           <v-text-field
-            v-model="userProfile.userEmail"
+            v-model="userEmail"
+            :error-messages="emailErrors"
             label="Email"
             outlined
             clearable
             prepend-icon="mdi-email"
+            @input="$v.userEmail.$touch()"
+            @blur="$v.userEmail.$touch()"
           ></v-text-field>
 
             <v-file-input
-              v-model="userProfile.userPhoto"
+              v-model="userPhoto"
               counter
               label="Foto"
               multiple
@@ -49,7 +55,7 @@
             </v-file-input>
 
           <v-text-field
-            v-model="userProfile.userLocation"
+            v-model="userLocation"
             label="Lokalita"
             outlined
             prepend-icon="mdi-map-marker"
@@ -57,7 +63,7 @@
           ></v-text-field>
 
           <v-textarea
-            v-model="userProfile.searches"
+            v-model="searches"
             label="Hledám"
             counter
             maxlength="120"
@@ -66,7 +72,7 @@
           ></v-textarea>
 
           <v-textarea
-            v-model="userProfile.offers"
+            v-model="offers"
             label="Nabízím"
             counter
             maxlength="120"
@@ -75,9 +81,9 @@
           ></v-textarea>
 
           <v-btn
-            class="ma-2"
+            @click="submit"
             outlined
-            color="gray"
+            color="#7CB342"
             >Uložit
             </v-btn>
     </form>
@@ -86,9 +92,18 @@
 
 <script>
 // import firebase from "firebase/app";
+import { validationMixin } from 'vuelidate'
+import { required, maxLength, email } from 'vuelidate/lib/validators'
 
 export default {
   name: "ProfileUpdate",
+
+  mixins: [validationMixin],
+
+  validations: {
+      userName: { required, maxLength: maxLength(20) },
+      userEmail: { required, email },
+  },
 
   data() {
     return {
@@ -100,7 +115,30 @@ export default {
       searches: "",
       offers: ""
     };
-  }
+  },
+
+  computed: {
+      nameErrors () {
+        const errors = []
+        if (!this.$v.userName.$dirty) return errors
+        !this.$v.userName.maxLength && errors.push('Name must be at most 10 characters long')
+        !this.$v.userName.required && errors.push('Name is required.')
+        return errors
+      },
+      emailErrors () {
+        const errors = []
+        if (!this.$v.userEmail.$dirty) return errors
+        !this.$v.userEmail.email && errors.push('Must be valid e-mail')
+        !this.$v.userEmail.required && errors.push('E-mail is required')
+        return errors
+      },
+  },
+
+    methods: {
+      submit () {
+        this.$v.$touch()
+      },
+    }
 
   /*    methods:{
       fetchProfile() {
@@ -158,5 +196,11 @@ export default {
 <style>
 .form{
   margin: 10px;
+}
+
+h2{
+  text-align: center;
+  margin-bottom: 20px;
+  color: #7CB342;
 }
 </style>
