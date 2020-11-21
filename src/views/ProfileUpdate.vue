@@ -91,7 +91,6 @@
 </template>
 
 <script>
-// import firebase from "firebase/app";
 import { validationMixin } from 'vuelidate'
 import { required, maxLength, email } from 'vuelidate/lib/validators'
 

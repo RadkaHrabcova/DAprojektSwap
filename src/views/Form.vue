@@ -1,7 +1,6 @@
 <template>
-  <form @submit.prevent="sendData" class="ad">
+  <v-form @submit.prevent="sendData" class="ad">
     <h2>Přidej inzerát</h2>
-
   <v-stepper
     v-model="e6"
     vertical
@@ -14,8 +13,7 @@
     </v-stepper-step>
 
     <v-stepper-content step="1">
-      <v-card
-        height="150px">
+      <v-card>
         <v-card-text>
           <v-file-input
             v-model="picture"
@@ -44,22 +42,15 @@
                 v-else-if="index === 2"
                 class="overline grey--text text--darken-3 mx-2"
               >
-                +{{ picture.length - 2 }} File(s)
+                +{{ imageData.length - 2 }} File(s)
               </span>
             </template>
           </v-file-input>
 
-        <!--     <div>
-              <p>
-                {{ uploadValue.toFixed() + "%" }}
-                <progress id="progress" :value="uploadValue" max="100"></progress>
-              </p>
-            </div>
             <div v-if="imageData != null">
               <img class="preview" :src="picture" />
-              <br />
-              <button >Upload</button>
-            </div> -->
+              <v-btn @click="onUpload">Upload</v-btn>
+            </div>
         </v-card-text>
       </v-card>
 
@@ -104,6 +95,9 @@
           multiple
           chips
           outlined
+          :error-messages="categoryErrors"
+          @input="$v.category.$touch()"
+          @blur="$v.category.$touch()"
         ></v-select>
 
         <v-text-field
@@ -111,6 +105,9 @@
           label="Název produktu"
           outlined
           clearable
+          :error-messages="nameErrors"
+          @input="$v.name.$touch()"
+          @blur="$v.name.$touch()"
         ></v-text-field>
 
         <v-textarea
@@ -177,16 +174,20 @@
       </v-btn>
     </v-stepper-content>
   </v-stepper>
+
     <v-btn
       outlined
+      type="submit"
       color="#7CB342"
       @click="onUpload"
     >Přidat inzerát</v-btn>
-  </form>
+  </v-form>
 </template>
 
 <script>
 import firebase from "firebase";
+import { validationMixin } from 'vuelidate'
+import { required } from 'vuelidate/lib/validators'
 
 export default {
   data() {
@@ -204,9 +205,32 @@ export default {
       e6: 1
     };
   },
+
+  mixins: [validationMixin],
+
+  validations: {
+      category: { required},
+      name: {required}
+  },
+
+  
+  computed: {
+      categoryErrors () {
+        const errors = []
+        if (!this.$v.category.$dirty) return errors
+        !this.$v.category.required && errors.push('Kategorie inzerátu musí být zadán.')
+        return errors
+      },
+      nameErrors () {
+        const errors = []
+        if (!this.$v.name.$dirty) return errors
+        !this.$v.name.required && errors.push('Název inzerátu musí být zadán.')
+        return errors
+      },
+  },
+
   methods: {
     sendData() {
-      console.log("posilam data");
       fetch("http://127.0.0.1:5000/ad", {
         method: "POST",
         headers: {
@@ -217,18 +241,19 @@ export default {
           category: this.category,
           name: this.name,
           description: this.description,
+          location: this.location,
           exchange: this.exchange,
-          imageData: this.imageData,
           picture: this.picture,
           uploadValue: this.uploadValue,
+          imageData: this.imageData
         }),
       });
     },
 
-    previewImage(event) {
+    previewImage(files) {
       this.uploadValue = 0;
       this.picture = null;
-      this.imageData = event.target.files[0];
+      this.imageData = files[0];
     },
 
     onUpload() {
@@ -265,5 +290,7 @@ img.preview {
 
 .ad{
   margin: 10px;
+  display: flex;
+  flex-direction: column;
 }
 </style>
