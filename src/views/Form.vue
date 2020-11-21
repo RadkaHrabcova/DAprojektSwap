@@ -157,12 +157,6 @@
       </v-card>
 
       <v-btn
-        color="primary"
-        @click="e6 = 4"
-      >
-        Continue
-      </v-btn>
-      <v-btn
       @click="e6--"
        text>
         Zpět
@@ -296,4 +290,21 @@ img.preview {
   display: flex;
   flex-direction: column;
 }
+
+.v-stepper{
+  margin-bottom: 10px;
+}
+
+.v-stepper__content{
+  padding-top: 5px !important;
+}
+
+.v-input--selection-controls{
+  margin-top: 0 !important;
+}
+
+.container{
+  padding-top: 0 !important;
+}
+
 </style>
