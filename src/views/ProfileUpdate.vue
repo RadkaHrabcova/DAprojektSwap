@@ -1,22 +1,85 @@
 <template>
   <div class="profile_update">
-    <form @submit.prevent="updateProfile">
-      <h2>Uživatelské jméno:</h2>
-      <input type="text" v-model="userProfile.userName" />
-      <h2>Email:</h2>
-      <input type="text" v-model="userProfile.userEmail" />
-      <h2>Photo:</h2>
-      <input type="text" v-model="userProfile.userPhoto" />
+    <h1></h1>
+    <form class="form" @submit.prevent="updateProfile">
+      <v-text-field
+            v-model="userProfile.userName"
+            label="Uživatelské jméno"
+            outlined
+            clearable
+            prepend-icon="mdi-account"
+          ></v-text-field>
 
-      <h2>Lokalita:</h2>
-      <input type="text" v-model="userProfile.userLocation" />
-      <h2>Hledám:</h2>
-      <textarea v-model="userProfile.searches"></textarea>
-      <h2>Nabízím:</h2>
-      <input type="text" v-model="userProfile.offers" />
-      <br />
-      <br />
-      <button>Update</button>
+          <v-text-field
+            v-model="userProfile.userEmail"
+            label="Email"
+            outlined
+            clearable
+            prepend-icon="mdi-email"
+          ></v-text-field>
+
+            <v-file-input
+              v-model="userProfile.userPhoto"
+              counter
+              label="Foto"
+              multiple
+              prepend-icon="mdi-paperclip"
+              placeholder="Vyberte ze složky"
+              outlined
+              :show-size="1000"
+            >
+              <template v-slot:selection="{ index, text }">
+                <v-chip
+                  v-if="index < 2"
+                  color="light-green darken-1"
+                  dark
+                  label
+                  small
+                >
+                  {{ text }}
+                </v-chip>
+
+                <span
+                  v-else-if="index === 2"
+                  class="overline grey--text text--darken-3 mx-2"
+                >
+                  +{{ userPhoto.length - 2 }} File(s)
+                </span>
+              </template>
+            </v-file-input>
+
+          <v-text-field
+            v-model="userProfile.userLocation"
+            label="Lokalita"
+            outlined
+            prepend-icon="mdi-map-marker"
+            clearable
+          ></v-text-field>
+
+          <v-textarea
+            v-model="userProfile.searches"
+            label="Hledám"
+            counter
+            maxlength="120"
+            full-width
+            outlined
+          ></v-textarea>
+
+          <v-textarea
+            v-model="userProfile.offers"
+            label="Nabízím"
+            counter
+            maxlength="120"
+            full-width
+            outlined
+          ></v-textarea>
+
+          <v-btn
+            class="ma-2"
+            outlined
+            color="gray"
+            >Uložit
+            </v-btn>
     </form>
   </div>
 </template>
@@ -32,7 +95,7 @@ export default {
       userProfile: {},
       userName: "",
       userEmail: "",
-      userPhoto: "",
+      userPhoto: [],
       userLocation: "",
       searches: "",
       offers: ""
@@ -92,4 +155,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.form{
+  margin: 10px;
+}
+</style>
