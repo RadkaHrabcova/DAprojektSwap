@@ -58,7 +58,7 @@
             <div v-if="imageData != null">
               <img class="preview" :src="picture" />
               <br />
-              <button @click="onUpload">Upload</button>
+              <button >Upload</button>
             </div> -->
         </v-card-text>
       </v-card>
@@ -180,6 +180,7 @@
     <v-btn
       outlined
       color="#7CB342"
+      @click="onUpload"
     >Přidat inzerát</v-btn>
   </form>
 </template>
@@ -220,7 +221,6 @@ export default {
           imageData: this.imageData,
           picture: this.picture,
           uploadValue: this.uploadValue,
-          product_id: this.product_id,
         }),
       });
     },
