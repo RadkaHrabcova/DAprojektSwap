@@ -3,21 +3,21 @@
     <h1>Detail inzerátu</h1>
 
     <h2>Vyberte foto</h2>
-     
-    
-      <div >
-      <input type="file" @change="previewImage" accept="image/*" >
+
+    <div>
+      <input type="file" @change="previewImage" accept="image/*" />
     </div>
     <div>
-      <p>{{uploadValue.toFixed()+"%"}}
-      <progress id="progress" :value="uploadValue" max="100" ></progress>  </p>
+      <p>
+        {{ uploadValue.toFixed() + "%" }}
+        <progress id="progress" :value="uploadValue" max="100"></progress>
+      </p>
     </div>
-    <div v-if="imageData!=null">
-        <img class="preview" :src="picture">
-        <br>
+    <div v-if="imageData != null">
+      <img class="preview" :src="picture" />
+      <br />
       <button @click="onUpload">Upload</button>
     </div>
- 
 
     <h2>Vyberte typ</h2>
     <input type="radio" name="typeOfAd" value="offer" v-model="type" />Nabízím
@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import firebase from 'firebase';
+import firebase from "firebase";
 
 export default {
   data() {
@@ -83,7 +83,7 @@ export default {
       fetch("http://127.0.0.1:5000/ad", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({
           type: this.type,
@@ -97,37 +97,45 @@ export default {
           imageData: this.imageData,
           picture: this.picture,
           uploadValue: this.uploadValue
-        }),
+        })
       });
     },
 
     previewImage(event) {
-      this.uploadValue=0;
-      this.picture=null;
+      this.uploadValue = 0;
+      this.picture = null;
       this.imageData = event.target.files[0];
     },
 
-       onUpload(){
-      this.picture=null;
-      const storageRef=firebase.storage().ref(`${this.imageData.name}`).put(this.imageData);
-      storageRef.on(`state_changed`,snapshot=>{
-        this.uploadValue = (snapshot.bytesTransferred/snapshot.totalBytes)*100;
-      }, error=>{console.log(error.message)},
-      ()=>{this.uploadValue=100;
-        storageRef.snapshot.ref.getDownloadURL().then((url)=>{
-          this.picture =url;
-        });
-      }
-      );}
-   
-   
-  },
+    onUpload() {
+      this.picture = null;
+      const storageRef = firebase
+        .storage()
+        .ref(`${this.imageData.name}`)
+        .put(this.imageData);
+      storageRef.on(
+        `state_changed`,
+        snapshot => {
+          this.uploadValue =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        },
+        error => {
+          console.log(error.message);
+        },
+        () => {
+          this.uploadValue = 100;
+          storageRef.snapshot.ref.getDownloadURL().then(url => {
+            this.picture = url;
+          });
+        }
+      );
+    }
+  }
 };
 </script>
 
 <style>
 img.preview {
-    width: 200px;
+  width: 200px;
 }
-
 </style>

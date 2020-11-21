@@ -1,9 +1,10 @@
 module.exports = {
-    pwa:{
-        name: "swapito",
-        workboxPluginMode:"InjectManifest",
-        workboxOptions: {
-            swSrc: "src/service-worker.js"
-        }
+  pwa: {
+    name: "swapito",
+    workboxPluginMode: "InjectManifest",
+    workboxOptions: {
+      swSrc: "src/service-worker.js"
     }
+  },
+  transpileDependencies: ["vuetify"]
 };

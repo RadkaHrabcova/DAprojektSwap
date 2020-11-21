@@ -1,27 +1,27 @@
 <template>
   <div class="AllAds">
     <h1>Zde jsou všechny inzeráty</h1>
-    
-   <ul id="adds">
-  <li v-for="ad in ads" :key="ad.id">
-    <h2>{{ad.name}}</h2>
-    <p>{{ad.type}}</p>
-    <p>{{ad.description}}</p>
-  </li>
-</ul>
+
+    <ul id="adds">
+      <li v-for="ad in ads" :key="ad.id">
+        <h2>{{ ad.name }}</h2>
+        <p>{{ ad.type }}</p>
+        <p>{{ ad.description }}</p>
+      </li>
+    </ul>
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
-      ads: [],
+      ads: []
     };
   },
   methods: {
     fetchAds() {
       fetch("http://127.0.0.1:5000/ads")
-        .then((response) => {
+        .then(response => {
           // ze serveru přišla odpověď
           if (response.ok) {
             // vše je ok, stáhneme zbytek zprávy jako JSON
@@ -31,23 +31,21 @@ export default {
             throw Error("Něco je špatně");
           }
         })
-        .then((json) => {
+        .then(json => {
           // vypsání výsledku
           this.ads = json;
         })
-        .catch((error) => {
+        .catch(error => {
           // vypsání chyby
           this.ads = error;
         });
-    },
+    }
   },
-  created(){
-      console.log('created')
-    this.fetchAds()
+  created() {
+    console.log("created");
+    this.fetchAds();
   }
 };
 </script>
 
-<style>
-
-</style>
+<style></style>

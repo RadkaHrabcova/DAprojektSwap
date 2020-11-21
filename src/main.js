@@ -1,9 +1,10 @@
 import Vue from "vue";
 import App from "./App.vue";
 import "./registerServiceWorker";
-import router from './router'
-import  firebase from "firebase/app";
+import router from "./router";
+import firebase from "firebase/app";
 import "firebase/auth";
+import vuetify from "./plugins/vuetify";
 
 Vue.config.productionTip = false;
 
@@ -19,8 +20,8 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-
 new Vue({
-   router,
+  router,
+  vuetify,
   render: h => h(App)
 }).$mount("#app");
