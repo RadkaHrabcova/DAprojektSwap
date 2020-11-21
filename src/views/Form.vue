@@ -1,42 +1,37 @@
 <template>
   <v-form @submit.prevent="sendData" class="ad">
     <h2>Přidej inzerát</h2>
-  <v-stepper
-    v-model="e6"
-    vertical
-  >
-    <v-stepper-step
-      :complete="e6 > 1"
-      step="1"
-    >
-      Nahraj foto nebo obrázek
-    </v-stepper-step>
 
-    <v-stepper-content step="1">
-      <v-card>
-        <v-card-text>
-          <v-file-input
-            v-model="picture"
-            counter
-            label="Foto"
-            multiple
-            prepend-icon="mdi-paperclip"
-            placeholder="Vyberte ze složky"
-            outlined
-            :show-size="1000"
-            @change="previewImage" 
-            accept="image/*" 
+    <v-stepper v-model="e6" vertical>
+      <v-stepper-step :complete="e6 > 1" step="1">
+        Nahraj foto nebo obrázek
+      </v-stepper-step>
+
+      <v-stepper-content step="1">
+        <v-card>
+          <v-card-text>
+            <v-file-input
+              v-model="picture"
+              counter
+              label="Foto"
+              multiple
+              prepend-icon="mdi-paperclip"
+              placeholder="Vyberte ze složky"
+              outlined
+              @change="previewImage"
+              :show-size="1000"
+              accept="image/*"
+            >
+              <template v-slot:selection="{ index, text }">
+                <v-chip
+                  v-if="index < 2"
+                  color="light-green darken-1"
+                  dark
+                  label
+                  small
                 >
-            <template v-slot:selection="{ index, text }">
-              <v-chip
-                v-if="index < 2"
-                color="light-green darken-1"
-                dark
-                label
-                small
-                    >
-                {{ text }}
-              </v-chip>
+                  {{ text }}
+                </v-chip>
 
               <span
                 v-else-if="index === 2"
@@ -179,7 +174,6 @@
       outlined
       type="submit"
       color="#7CB342"
-      @click="onUpload"
     >Přidat inzerát</v-btn>
   </v-form>
 </template>
@@ -194,7 +188,14 @@ export default {
     return {
       type: "",
       category: [],
-      categories:["Květiny", "Hračky", "Oblečení", "Domácnost"],
+      categories: [
+        "Květiny",
+        "Hračky",
+        "Oblečení",
+        "Domácnost",
+        "Elektronika",
+        "Jiné",
+      ],
       name: "",
       description: "",
       location: "",
@@ -202,7 +203,7 @@ export default {
       imageData: null,
       picture: null,
       uploadValue: 0,
-      e6: 1
+      e6: 1,
     };
   },
 
@@ -275,6 +276,8 @@ export default {
           this.uploadValue = 100;
           storageRef.snapshot.ref.getDownloadURL().then((url) => {
             this.picture = url;
+            console.log(url);
+            console.log(this.picture);
           });
         }
       );
@@ -288,7 +291,7 @@ img.preview {
   width: 200px;
 }
 
-.ad{
+.ad {
   margin: 10px;
   display: flex;
   flex-direction: column;
