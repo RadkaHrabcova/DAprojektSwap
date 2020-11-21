@@ -205,10 +205,11 @@ export default {
   },
   methods: {
     sendData() {
+      console.log("posilam data");
       fetch("http://127.0.0.1:5000/ad", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           type: this.type,
@@ -218,8 +219,9 @@ export default {
           exchange: this.exchange,
           imageData: this.imageData,
           picture: this.picture,
-          uploadValue: this.uploadValue
-        })
+          uploadValue: this.uploadValue,
+          product_id: this.product_id,
+        }),
       });
     },
 
@@ -237,22 +239,22 @@ export default {
         .put(this.imageData);
       storageRef.on(
         `state_changed`,
-        snapshot => {
+        (snapshot) => {
           this.uploadValue =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         },
-        error => {
+        (error) => {
           console.log(error.message);
         },
         () => {
           this.uploadValue = 100;
-          storageRef.snapshot.ref.getDownloadURL().then(url => {
+          storageRef.snapshot.ref.getDownloadURL().then((url) => {
             this.picture = url;
           });
         }
       );
-    }
-  }
+    },
+  },
 };
 </script>
 
