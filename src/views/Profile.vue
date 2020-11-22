@@ -6,9 +6,9 @@
       sm="8"
     >
       <v-card>
-        <v-card-title class="light-green darken-2">
-          <span v-if="userName != null" class="headline white--text">{{ userName }}</span>
-          <span v-else class="headline white--text">Uživatelský profil</span>
+        <v-card-title class="white">
+          <h2 v-if="userName != null">{{ userName }}</h2>
+          <h2 v-else>Uživatelský profil</h2>
 
           <v-spacer></v-spacer>
 
@@ -73,19 +73,21 @@
     v-for="ad in ads" :key="ad.id"
     cols="12"
     sm="8"
+    class="col-padding"
   >
     <v-card
-    class="mx-auto"
+    v-if="ad.userID == userID"
+    class="mx-auto ad-border"
     max-width="344"
   >
     <v-img
       :src="ad.picture"
       max-height="180px"
       contain
+      class="img-margin"
     ></v-img>
 
     <v-card-title
-      id="element"
     >
       {{ad.name}}
     </v-card-title>
@@ -94,35 +96,20 @@
        {{ad.type}}
     </v-card-subtitle>
 
-    <v-card-actions>
       <v-btn
         color="green darken-2"
         text
+        @click="show = !show"
       >
         Detail inzerátu
       </v-btn>
 
-      <v-spacer></v-spacer>
-
-      <v-btn
-        icon
-        @click="show = !show"
-        v-scroll-to="{ el: '#element', offset: 100 }"
-      >
-        <v-icon>{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
-      </v-btn>
-    </v-card-actions>
-
-    <v-expand-transition>
-      <div v-show="show">
-        <v-divider></v-divider>
-
-        <v-card-text>
+        <v-card-text
+        v-show="show"
+        >
           {{ad.description}}
         </v-card-text>
-      </div>
-    </v-expand-transition>
-    <v-divider></v-divider>
+
   </v-card>
 </v-col>
 </v-row>
@@ -143,7 +130,7 @@ export default {
       userPhoto: null,
       userLocation: null,
       show: false,
-      ads: []
+      ads: [],
     };
   },
 
@@ -202,5 +189,20 @@ export default {
 
 h2{
   margin-top: 30px;
+}
+
+.ad-border{
+  border: 1px solid lightgrey;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.img-margin{
+  margin-top: 10px;
+}
+
+.col-padding{
+  padding-top: 0;
+  padding-bottom: 0;
 }
 </style>

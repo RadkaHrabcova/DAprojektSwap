@@ -1,15 +1,52 @@
 <template>
   <div class="AllAds">
-    <h1>Zde jsou všechny inzeráty</h1>
+    
+    <h2>Výpis inzerátů</h2>
 
-    <ul id="adds">
-      <li v-for="ad in ads" :key="ad.id">
-        <img :src="ad.picture" />
-        <h2>{{ ad.name }}</h2>
-        <p>{{ ad.type }}</p>
-        <p>{{ ad.description }}</p>
-      </li>
-    </ul>
+      <v-row justify="center">
+        <v-col
+          v-for="ad in ads" :key="ad.id"
+          cols="12"
+          sm="8"
+        >
+          <v-card
+          class="mx-auto ad-border"
+          max-width="344"
+        >
+          <v-img
+            :src="ad.picture"
+            max-height="180px"
+            contain
+            class="img-margin"
+          ></v-img>
+
+          <v-card-title
+          >
+            {{ad.name}}
+          </v-card-title>
+
+          <v-card-subtitle>
+            {{ad.type}}
+          </v-card-subtitle>
+
+            <v-btn
+              color="green darken-2"
+              text
+              @click="show = !show"
+            >
+              Detail inzerátu
+            </v-btn>
+
+              <v-card-text
+              v-show="show"
+              >
+                {{ad.description}}
+              </v-card-text>
+
+        </v-card>
+      </v-col>
+      </v-row>
+
   </div>
 </template>
 
@@ -19,6 +56,7 @@ export default {
   data() {
     return {
       ads: [],
+      show: false,
     };
   },
   methods: {
@@ -46,4 +84,14 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.ad-border{
+  border: 1px solid lightgrey;
+  border-radius: 10px;
+}
+
+.img-margin{
+  margin-top: 10px;
+}
+</style>>
+
