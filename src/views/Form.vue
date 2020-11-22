@@ -2,8 +2,8 @@
   <v-form @submit.prevent="sendData" class="ad">
     <h2>Přidej inzerát</h2>
 
-    <v-stepper v-model="e6" vertical>
-      <v-stepper-step :complete="e6 > 1" step="1">
+    <v-stepper v-model="stepCount" vertical>
+      <v-stepper-step :complete="stepCount > 1" step="1">
         Nahraj foto nebo obrázek
       </v-stepper-step>
 
@@ -51,14 +51,14 @@
 
       <v-btn
         color="primary"
-        @click="e6 = 2"
+        @click="stepCount = 2"
       >
         Pokračovat
       </v-btn>
     </v-stepper-content>
 
     <v-stepper-step
-      :complete="e6 > 2"
+      :complete="stepCount > 2"
       step="2"
     >
       Doplň další informace
@@ -75,11 +75,11 @@
         >
           <v-radio
             label="Nabízím"
-            value="offer"
+            value="Nabízím"
           ></v-radio>
           <v-radio
             label="Poptávám"
-            value="request"
+            value="Poptávám"
           ></v-radio>
         </v-radio-group>
       </v-container>
@@ -126,19 +126,19 @@
       </v-card>
       <v-btn
         color="primary"
-        @click="e6 = 3"
+        @click="stepCount = 3"
       >
         Pokračovat
       </v-btn>
       <v-btn 
-      @click="e6--"
+      @click="stepCount--"
       text>
         Zpět
       </v-btn>
     </v-stepper-content>
 
     <v-stepper-step
-      :complete="e6 > 3"
+      :complete="stepCount > 3"
       step="3"
     >
       Co za to?
@@ -157,7 +157,7 @@
       </v-card>
 
       <v-btn
-      @click="e6--"
+      @click="stepCount--"
        text>
         Zpět
       </v-btn>
@@ -197,7 +197,7 @@ export default {
       imageData: null,
       picture: null,
       uploadValue: 0,
-      e6: 1,
+      stepCount: 1,
     };
   },
 
@@ -240,7 +240,8 @@ export default {
           exchange: this.exchange,
           picture: this.picture,
           uploadValue: this.uploadValue,
-          imageData: this.imageData
+          imageData: this.imageData,
+          userID: firebase.auth().currentUser.uid
         }),
       });
     },
@@ -277,6 +278,8 @@ export default {
       );
     },
   },
+
+
 };
 </script>
 

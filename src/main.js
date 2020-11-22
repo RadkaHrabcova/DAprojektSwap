@@ -5,6 +5,9 @@ import router from "./router";
 import firebase from "firebase/app";
 import "firebase/auth";
 import vuetify from "./plugins/vuetify";
+var VueScrollTo = require('vue-scrollto');
+
+Vue.use(VueScrollTo)
 
 Vue.config.productionTip = false;
 
