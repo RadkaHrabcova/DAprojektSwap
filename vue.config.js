@@ -1,6 +1,6 @@
 module.exports = {
   pwa: {
-    name: "swapito",
+    name: "Swapito",
     workboxPluginMode: "InjectManifest",
     workboxOptions: {
       swSrc: "src/service-worker.js"
