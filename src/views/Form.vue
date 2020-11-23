@@ -195,7 +195,7 @@ export default {
 
   methods: {
     sendData() {
-      fetch("beta-swapito-main-sv1kp3pz6lex.herokuapp.com/ad", {
+      fetch("https://beta-swapito-main-sv1kp3pz6lex.herokuapp.com/ad", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
