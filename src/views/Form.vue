@@ -137,9 +137,11 @@
       </v-stepper-content>
     </v-stepper>
 
-    <v-btn outlined type="submit" color="#7CB342">Přidat inzerát</v-btn>
+    <v-btn outlined type="submit" color="#7CB342" @click="clearForm">Přidat inzerát</v-btn>
     <div class="success" v-if="savingSuccessful">
-      <v-alert type="success">
+      <v-alert
+      dismissible
+       type="success">
         Váš inzerát byl úspěšně přidán.
       </v-alert>
     </div>
@@ -276,6 +278,21 @@ export default {
         }
       );
     },
+
+    clearForm(){
+      this.$v.$reset()
+      this.type = ""
+      this.category = []
+      this.name = ""
+      this.description = ""
+      this.location = ""
+      this.exchange = ""
+      this.imageData = null
+      this.picture = null
+      this.uploadValue = 0
+      this.stepCount = 1
+      this.savingSuccessful = false
+    }
   },
 };
 </script>
@@ -309,5 +326,11 @@ img.preview {
 
 .preview-btn{
   margin-left: 10px;
+}
+
+.success{
+  z-index: 2;
+  position: absolute;
+  width: 96vw;
 }
 </style>
