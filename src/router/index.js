@@ -5,6 +5,7 @@ import Profile from "../views/Profile.vue";
 import ProfileUpdate from "../views/ProfileUpdate.vue";
 import Login from "../views/Login.vue";
 import AllAds from "../views/AllAds.vue";
+import PrivacyPolicy from "../views/PrivacyPolicy.vue";
 
 Vue.use(VueRouter);
 
@@ -33,6 +34,11 @@ const routes = [
     path: "/",
     name: "AllAds",
     component: AllAds
+  },
+  {
+    path: "/privacy",
+    name: "PrivacyPolicy",
+    component: PrivacyPolicy
   }
 ];
 
