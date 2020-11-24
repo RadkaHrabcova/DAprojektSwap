@@ -107,7 +107,7 @@
             ></v-text-field>
           </v-card-text>
         </v-card>
-        <v-btn color="primary" @click="stepCount = 3">
+        <v-btn color="primary" @click="continueStep">
           Pokračovat
         </v-btn>
         <v-btn @click="stepCount--" text>
@@ -140,9 +140,23 @@
     <v-btn outlined type="submit" color="#7CB342" @click="clearForm">Přidat inzerát</v-btn>
     <div class="success" v-if="savingSuccessful">
       <v-alert
-      dismissible
+       dismissible
        type="success">
         Váš inzerát byl úspěšně přidán.
+      </v-alert>
+    </div>
+    <div class="error" v-if="pictureNotUploaded">
+      <v-alert 
+      dismissible
+      type="error">
+      Nahrajte prosím obrázek nebo pořiďte foto.
+      </v-alert>
+    </div>
+    <div class="error" v-if="submitStatus === 'ERROR'">
+      <v-alert 
+      dismissible
+      type="error">
+      Vyplňte prosím všechna povinná pole.
       </v-alert>
     </div>
   </v-form>
@@ -175,6 +189,8 @@ export default {
       uploadValue: 0,
       stepCount: 1,
       savingSuccessful: false,
+      submitStatus: 'OK',
+      pictureNotUploaded: false
     };
   },
 
@@ -183,6 +199,7 @@ export default {
   validations: {
     category: { required },
     name: { required },
+    
   },
 
   computed: {
@@ -199,9 +216,26 @@ export default {
       !this.$v.name.required && errors.push("Název inzerátu musí být zadán.");
       return errors;
     },
+
+    
   },
 
   methods: {
+    validationCheck(){
+      this.$v.$touch()
+      if (this.$v.$invalid) {
+        this.submitStatus = 'ERROR'
+      }
+    },
+
+    continueStep(){
+      this.submitStatus = 'OK';
+      this.validationCheck();
+      if(this.submitStatus == 'OK'){
+        this.stepCount = 3
+      }
+    },
+    
     sendData() {
       fetch("https://beta-swapito-main-sv1kp3pz6lex.herokuapp.com/ad", {
         method: "POST",
@@ -255,28 +289,11 @@ export default {
     },
 
     uploadAndContinue() {
+      if(this.imageData == null){
+        this.pictureNotUploaded = true;
+      }
+      this.onUpload();
       this.stepCount = 2;
-      this.picture = null;
-      const storageRef = firebase
-        .storage()
-        .ref(`${this.imageData.name}`)
-        .put(this.imageData);
-      storageRef.on(
-        `state_changed`,
-        (snapshot) => {
-          this.uploadValue =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        },
-        (error) => {
-          console.log(error.message);
-        },
-        () => {
-          this.uploadValue = 100;
-          storageRef.snapshot.ref.getDownloadURL().then((url) => {
-            this.picture = url;
-          });
-        }
-      );
     },
 
     clearForm(){
@@ -292,7 +309,7 @@ export default {
       this.uploadValue = 0
       this.stepCount = 1
       this.savingSuccessful = false
-    }
+    },
   },
 };
 </script>
@@ -329,6 +346,12 @@ img.preview {
 }
 
 .success{
+  z-index: 2;
+  position: absolute;
+  width: 96vw;
+}
+
+.error{
   z-index: 2;
   position: absolute;
   width: 96vw;
