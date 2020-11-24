@@ -109,6 +109,8 @@ export default {
       userEmail: null,
       userPhoto: null,
       userLocation: null,
+      userSearches: null,
+      userOffers: null,
       show: false,
       ads: [],
     };
@@ -152,6 +154,9 @@ export default {
             userName: this.userName,
             userEmail: this.userEmail,
             userPhoto: this.userPhoto,
+            location: this.userLocation,
+            searches: this.userSearches,
+            offers: this.userOffers
           }),
         });
       }

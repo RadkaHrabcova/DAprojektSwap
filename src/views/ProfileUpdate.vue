@@ -28,7 +28,6 @@
               v-model="userPhoto"
               counter
               label="Foto"
-              multiple
               prepend-icon="mdi-paperclip"
               placeholder="Vyberte ze složky"
               outlined
@@ -44,13 +43,6 @@
                 >
                   {{ text }}
                 </v-chip>
-
-                <span
-                  v-else-if="index === 2"
-                  class="overline grey--text text--darken-3 mx-2"
-                >
-                  +{{ userPhoto.length - 2 }} File(s)
-                </span>
               </template>
             </v-file-input>
 
@@ -93,6 +85,7 @@
 <script>
 import { validationMixin } from 'vuelidate'
 import { required, maxLength, email } from 'vuelidate/lib/validators'
+import firebase from "firebase";
 
 export default {
   name: "ProfileUpdate",
@@ -106,10 +99,9 @@ export default {
 
   data() {
     return {
-      userProfile: {},
       userName: "",
       userEmail: "",
-      userPhoto: [],
+      userPhoto: "",
       userLocation: "",
       searches: "",
       offers: ""
@@ -137,58 +129,57 @@ export default {
       submit () {
         this.$v.$touch()
       },
-    }
 
-  /*    methods:{
       fetchProfile() {
-        fetch("http://127.0.0.1:5000/user/2wh6IXQRLfOBOLkXW2dXOydS06c2")
-          .then((response) => {
-            if (response.ok) {
-              return response.json();
-            } else {
-             throw Error("Něco je špatně");
-            }
-          })
-          .then((json) => {
-            this.userProfile = json;
-          })
-          .catch((error) => {
-            this.userProfile = error;
-        });
+        var user = firebase.auth().currentUser;
+
+        if (user != null) {
+          this.userName = user.displayName;
+          this.userEmail = user.email;
+          this.userPhoto = user.photoURL; 
+
+          var path = "https://beta-swapito-main-sv1kp3pz6lex.herokuapp.com/user/" + user.uid;
+          fetch(path)
+            .then((response) => {
+              if (response.ok) {
+                return response.json();
+              } else {
+                throw Error("Něco je špatně");
+              }
+            })
+            .then((object) => {
+              this.userLocation = object.location;
+              this.searches = object.searches;
+              this.offers = object.offers;
+            })
+            .catch((error) => {
+              this.user = error;
+            });
+        }
       },
 
-      updateProfile(){
-       fetch("http://127.0.0.1:5000/user/2wh6IXQRLfOBOLkXW2dXOydS06c2",{
+    updateProfile(){
+       fetch("https://beta-swapito-main-sv1kp3pz6lex.herokuapp.com/user/2wh6IXQRLfOBOLkXW2dXOydS06c2",{
          method:"PUT",
          headers:{
            "Content-Type":"application/json"
          },
          body:JSON.stringify({
-           location:this.location,
+           location:this.userLocation,
            searches:this.searches,
            offers:this.offers,
+           userName: this.userName,
+           userPhoto: this.userPhoto,
+           userEmail: this.userEmail
          })
        })
-      
-      var user =  firebase.auth().currentUser;
-      user.updateProfile({
-         displayName: this.userName,
-         photoURL: this.userPhoto
-       }).then(function() {
-       }).catch(function(error) {
-         throw error;
-       });
-
-       user.updateEmail(this.userEmail).then(function() {
-       }).catch(function(error) {
-         throw error;
-       });
      } 
    },
 
   created(){
     this.fetchProfile();
-  } */
+ },
+
 };
 </script>
 
