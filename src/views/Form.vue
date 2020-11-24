@@ -138,6 +138,11 @@
     </v-stepper>
 
     <v-btn outlined type="submit" color="#7CB342">Přidat inzerát</v-btn>
+    <div class="success" v-if="savingSuccessful">
+      <v-alert type="success">
+        Váš inzerát byl úspěšně přidán.
+      </v-alert>
+    </div>
   </v-form>
 </template>
 
@@ -167,6 +172,7 @@ export default {
       picture: null,
       uploadValue: 0,
       stepCount: 1,
+      savingSuccessful: false,
     };
   },
 
@@ -195,7 +201,8 @@ export default {
 
   methods: {
     sendData() {
-      fetch("beta-swapito-main-sv1kp3pz6lex.herokuapp.com/ad", {
+      fetch("https://beta-swapito-main-sv1kp3pz6lex.herokuapp.com/ad", {
+        //   https://beta-swapito-main-sv1kp3pz6lex.herokuapp.com/ad
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -212,7 +219,8 @@ export default {
           imageData: this.imageData,
           userID: firebase.auth().currentUser.uid,
         }),
-      });
+      }),
+        (this.savingSuccessful = true);
     },
 
     previewImage(files) {
