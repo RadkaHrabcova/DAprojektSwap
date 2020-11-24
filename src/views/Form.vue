@@ -227,7 +227,7 @@ export default {
       this.picture = null;
       this.imageData = files[0];
     },
-    
+
     onUpload() {
       this.picture = null;
       const storageRef = firebase
