@@ -140,7 +140,7 @@
     <v-btn outlined type="submit" color="#7CB342">Přidat inzerát</v-btn>
     <div class="success" v-if="savingSuccessful">
       <v-alert type="success">
-        Váš inzerát byl úspěšně přidán.
+        Váš inzerát byl úspěšně přidán
       </v-alert>
     </div>
   </v-form>
