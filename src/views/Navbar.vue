@@ -72,6 +72,12 @@
             v-if="userIsSignedIn" @click="signOut"
             >Odhlásit se
             </v-btn>
+
+          <v-list-item>
+            <v-list-item-title>
+              <router-link to="/privacy">Ochrana soukromí</router-link>
+            </v-list-item-title>
+          </v-list-item>
            
         </v-list-item-group>
       </v-list>
