@@ -49,7 +49,7 @@
           </v-card-text>
         </v-card>
 
-        <v-btn color="primary" @click="stepCount = 2">
+        <v-btn color="primary" @click="uploadAndContinue">
           Pokračovat
         </v-btn>
       </v-stepper-content>
@@ -227,7 +227,7 @@ export default {
       this.picture = null;
       this.imageData = files[0];
     },
-
+    
     onUpload() {
       this.picture = null;
       const storageRef = firebase
@@ -247,8 +247,31 @@ export default {
           this.uploadValue = 100;
           storageRef.snapshot.ref.getDownloadURL().then((url) => {
             this.picture = url;
-            console.log(url);
-            console.log(this.picture);
+          });
+        }
+      );
+    },
+
+    uploadAndContinue() {
+      this.stepCount = 2;
+      this.picture = null;
+      const storageRef = firebase
+        .storage()
+        .ref(`${this.imageData.name}`)
+        .put(this.imageData);
+      storageRef.on(
+        `state_changed`,
+        (snapshot) => {
+          this.uploadValue =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        },
+        (error) => {
+          console.log(error.message);
+        },
+        () => {
+          this.uploadValue = 100;
+          storageRef.snapshot.ref.getDownloadURL().then((url) => {
+            this.picture = url;
           });
         }
       );
