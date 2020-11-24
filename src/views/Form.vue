@@ -44,7 +44,7 @@
 
             <div v-if="imageData != null">
               <img class="preview" :src="picture" />
-              <v-btn @click="onUpload">Upload</v-btn>
+              <v-btn class="preview-btn" @click="onUpload">Zobrazit náhled</v-btn>
             </div>
           </v-card-text>
         </v-card>
@@ -305,5 +305,9 @@ img.preview {
 
 .container {
   padding-top: 0 !important;
+}
+
+.preview-btn{
+  margin-left: 10px;
 }
 </style>
