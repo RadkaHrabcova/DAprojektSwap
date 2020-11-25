@@ -4,7 +4,7 @@
       <v-col cols="12" sm="8">
         <v-card>
           <v-card-title class="white">
-            <h2 v-if="userName != null">{{ userName }}</h2>
+            <h2 v-if="object.userName != null">{{ object.userName }}</h2>
             <h2 v-else>Uživatelský profil</h2>
 
             <v-spacer></v-spacer>
@@ -17,7 +17,7 @@
           </v-card-title>
 
           <v-img
-            :src="userPhoto"
+            :src="object.userPhoto"
             contain
             lazy-src="../assets/placeholder_profile_img.png"
             max-height="130px"
@@ -31,19 +31,43 @@
               </v-list-item-action>
 
               <v-list-item-content>
-                <v-list-item-title>{{ userEmail }}</v-list-item-title>
+                <v-list-item-title>{{ object.userEmail }}</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
 
-            <v-divider v-if="userLocation != null" inset> </v-divider>
+            <v-divider v-if="object.location !=null" inset> </v-divider>
 
-            <v-list-item v-if="userLocation != null">
+            <v-list-item v-if="object.location !=null">
               <v-list-item-action>
                 <v-icon>mdi-map-marker</v-icon>
               </v-list-item-action>
 
               <v-list-item-content>
-                <v-list-item-title>{{ userLocation }}</v-list-item-title>
+                <v-list-item-title>{{ object.location }}</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+
+            <v-divider v-if="object.searches !=null" inset> </v-divider>
+
+            <v-list-item v-if="object.searches !=null">
+              <v-list-item-action>
+                <v-icon>mdi-magnify</v-icon>
+              </v-list-item-action>
+
+              <v-list-item-content>
+                <v-list-item-title>{{ object.searches }}</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+
+            <v-divider v-if="object.offers !=null" inset> </v-divider>
+
+
+            <v-list-item v-if="object.offers !=null">
+              <v-list-item-action>
+                  <v-icon>mdi-hand-heart</v-icon>
+              </v-list-item-action>
+              <v-list-item-content>
+                <v-list-item-title>{{ object.offers }}</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
           </v-list>
@@ -105,14 +129,9 @@ export default {
     return {
       user: null,
       userID: null,
-      userName: null,
-      userEmail: null,
-      userPhoto: null,
-      userLocation: null,
-      userSearches: null,
-      userOffers: null,
       show: false,
       ads: [],
+      object: {}
     };
   },
 
@@ -133,37 +152,42 @@ export default {
           this.ads = error;
         });
     },
-  },
 
+      fetchProfile() {
+        var user = firebase.auth().currentUser;
+
+        if (user != null) {
+          this.user = user;
+          this.userID = user.uid;
+
+          var path = "https://beta-swapito-main-sv1kp3pz6lex.herokuapp.com/user/" + user.uid;
+          fetch(path)
+            .then((response) => {
+              if (response.ok) {
+                  return response.json();
+              } else {
+                throw Error("Něco je špatně");
+              }
+            })
+            .then((object) => {
+              this.object = object;
+            })
+            .catch((error) => {
+              this.user = error;
+            });
+        }
+      },
+      
+  },
+  
   created() {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        this.user = user;
-        this.userID = user.uid;
-        this.userName = user.displayName;
-        this.userEmail = user.email;
-        this.userPhoto = user.photoURL;
-
-        fetch("https://beta-swapito-main-sv1kp3pz6lex.herokuapp.com/user", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            userID: this.userID,
-            userName: this.userName,
-            userEmail: this.userEmail,
-            userPhoto: this.userPhoto,
-            location: this.userLocation,
-            searches: this.userSearches,
-            offers: this.userOffers
-          }),
-        });
-      }
-    });
+    this.fetchProfile();
     this.fetchAds();
-  },
+  }
 };
+
+
+
 </script>
 
 <style lang="css" scoped>

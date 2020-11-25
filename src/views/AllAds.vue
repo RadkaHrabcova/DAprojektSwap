@@ -63,7 +63,6 @@ export default {
     },
   },
   created() {
-    console.log("created");
     this.fetchAds();
         firebase.auth().onAuthStateChanged(user => {
       if (user) {

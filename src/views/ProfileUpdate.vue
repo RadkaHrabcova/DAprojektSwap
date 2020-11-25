@@ -73,7 +73,7 @@
           ></v-textarea>
 
           <v-btn
-            @click="submit"
+            type="submit"
             outlined
             color="#7CB342"
             >Uložit
@@ -99,12 +99,12 @@ export default {
 
   data() {
     return {
-      userName: "",
-      userEmail: "",
-      userPhoto: "",
-      userLocation: "",
-      searches: "",
-      offers: ""
+      userName: null,
+      userEmail: null,
+      userPhoto: null,
+      userLocation: null,
+      searches: null,
+      offers: null
     };
   },
 
@@ -126,10 +126,6 @@ export default {
   },
 
     methods: {
-      submit () {
-        this.$v.$touch()
-      },
-
       fetchProfile() {
         var user = firebase.auth().currentUser;
 
@@ -159,7 +155,9 @@ export default {
       },
 
     updateProfile(){
-       fetch("https://beta-swapito-main-sv1kp3pz6lex.herokuapp.com/user/2wh6IXQRLfOBOLkXW2dXOydS06c2",{
+      var user = firebase.auth().currentUser;
+      this.$v.$touch();
+       fetch("https://beta-swapito-main-sv1kp3pz6lex.herokuapp.com/user/" + user.uid,{
          method:"PUT",
          headers:{
            "Content-Type":"application/json"
@@ -173,6 +171,7 @@ export default {
            userEmail: this.userEmail
          })
        })
+       this.$router.push('/profile');
      } 
    },
 
