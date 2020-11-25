@@ -34,11 +34,14 @@
 </template>
 
 <script>
+import firebase from "firebase/app";
+
 export default {
   data() {
     return {
       ads: [],
       show: false,
+      userIsSignedIn: false,
     };
   },
   methods: {
@@ -62,6 +65,11 @@ export default {
   created() {
     console.log("created");
     this.fetchAds();
+        firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.userIsSignedIn = true;
+      }
+    });
   },
 };
 </script>
