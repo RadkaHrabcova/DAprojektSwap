@@ -44,7 +44,9 @@
 
             <div v-if="imageData != null">
               <img class="preview" :src="picture" />
-              <v-btn class="preview-btn" @click="onUpload">Zobrazit náhled</v-btn>
+              <v-btn class="preview-btn" @click="onUpload"
+                >Zobrazit náhled</v-btn
+              >
             </div>
           </v-card-text>
         </v-card>
@@ -137,26 +139,20 @@
       </v-stepper-content>
     </v-stepper>
 
-    <v-btn outlined type="submit" color="#7CB342" @click="clearForm">Přidat inzerát</v-btn>
+    <v-btn outlined type="submit" color="#7CB342">Přidat inzerát</v-btn>
     <div class="success" v-if="savingSuccessful">
-      <v-alert
-       dismissible
-       type="success">
+      <v-alert dismissible type="success">
         Váš inzerát byl úspěšně přidán.
       </v-alert>
     </div>
     <div class="error" v-if="pictureNotUploaded">
-      <v-alert 
-      dismissible
-      type="error">
-      Nahrajte prosím obrázek nebo pořiďte foto.
+      <v-alert dismissible type="error">
+        Nahrajte prosím obrázek nebo pořiďte foto.
       </v-alert>
     </div>
     <div class="error" v-if="submitStatus === 'ERROR'">
-      <v-alert 
-      dismissible
-      type="error">
-      Vyplňte prosím všechna povinná pole.
+      <v-alert dismissible type="error">
+        Vyplňte prosím všechna povinná pole.
       </v-alert>
     </div>
   </v-form>
@@ -189,8 +185,8 @@ export default {
       uploadValue: 0,
       stepCount: 1,
       savingSuccessful: false,
-      submitStatus: 'OK',
-      pictureNotUploaded: false
+      submitStatus: "OK",
+      pictureNotUploaded: false,
     };
   },
 
@@ -199,7 +195,6 @@ export default {
   validations: {
     category: { required },
     name: { required },
-    
   },
 
   computed: {
@@ -216,26 +211,24 @@ export default {
       !this.$v.name.required && errors.push("Název inzerátu musí být zadán.");
       return errors;
     },
-
-    
   },
 
   methods: {
-    validationCheck(){
-      this.$v.$touch()
+    validationCheck() {
+      this.$v.$touch();
       if (this.$v.$invalid) {
-        this.submitStatus = 'ERROR'
+        this.submitStatus = "ERROR";
       }
     },
 
-    continueStep(){
-      this.submitStatus = 'OK';
+    continueStep() {
+      this.submitStatus = "OK";
       this.validationCheck();
-      if(this.submitStatus == 'OK'){
-        this.stepCount = 3
+      if (this.submitStatus == "OK") {
+        this.stepCount = 3;
       }
     },
-    
+
     sendData() {
       fetch("https://beta-swapito-main-sv1kp3pz6lex.herokuapp.com/ad", {
         method: "POST",
@@ -253,8 +246,11 @@ export default {
           uploadValue: this.uploadValue,
           imageData: this.imageData,
           userID: firebase.auth().currentUser.uid,
+          email: firebase.auth().currentUser.email,
         }),
       }),
+        (this.savingSuccessful = true),
+        this.clearForm(),
         (this.savingSuccessful = true);
     },
 
@@ -289,26 +285,26 @@ export default {
     },
 
     uploadAndContinue() {
-      if(this.imageData == null){
+      if (this.imageData == null) {
         this.pictureNotUploaded = true;
       }
       this.onUpload();
       this.stepCount = 2;
     },
 
-    clearForm(){
-      this.$v.$reset()
-      this.type = ""
-      this.category = []
-      this.name = ""
-      this.description = ""
-      this.location = ""
-      this.exchange = ""
-      this.imageData = null
-      this.picture = null
-      this.uploadValue = 0
-      this.stepCount = 1
-      this.savingSuccessful = false
+    clearForm() {
+      this.$v.$reset();
+      this.type = "";
+      this.category = [];
+      this.name = "";
+      this.description = "";
+      this.location = "";
+      this.exchange = "";
+      this.imageData = null;
+      this.picture = null;
+      this.uploadValue = 0;
+      this.stepCount = 1;
+      this.savingSuccessful = false;
     },
   },
 };
@@ -341,17 +337,17 @@ img.preview {
   padding-top: 0 !important;
 }
 
-.preview-btn{
+.preview-btn {
   margin-left: 10px;
 }
 
-.success{
+.success {
   z-index: 2;
   position: absolute;
   width: 96vw;
 }
 
-.error{
+.error {
   z-index: 2;
   position: absolute;
   width: 96vw;
