@@ -25,7 +25,16 @@
           </v-btn>
 
           <v-card-text v-show="show">
-            {{ ad.description }}
+            <p>{{ ad.description }}</p>
+            <p>Vyměním za: {{ ad.exchange }}</p>
+            <div>
+              <v-icon>mdi-map-marker</v-icon>
+              <p>Lokalita: {{ ad.location }}</p>
+            </div>
+            <div v-if="userIsSignedIn">
+              <v-icon>mdi-email</v-icon>
+              <p>Kontakt: {{ ad.email }}</p>
+            </div>
           </v-card-text>
         </v-card>
       </v-col>
@@ -65,7 +74,7 @@ export default {
   created() {
     console.log("created");
     this.fetchAds();
-        firebase.auth().onAuthStateChanged(user => {
+    firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.userIsSignedIn = true;
       }
