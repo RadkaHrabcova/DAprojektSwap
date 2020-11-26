@@ -1,88 +1,77 @@
 <template>
   <div class="navbar">
-    <v-card
-    class="mx-auto overflow-hidden"
-    min-height="100vh"
-    min-width="344"
-  >
-    <v-system-bar color="light-green darken-4"></v-system-bar>
+    <v-card class="mx-auto overflow-hidden" min-height="100vh" min-width="344">
+      <v-system-bar color="light-green darken-4"></v-system-bar>
 
-    <v-app-bar
-      color="light-green darken-3"
-      dark
-      prominent
-      max-height="80"
-    >
-      <v-toolbar-title id="logo">SWAPITO</v-toolbar-title>
-      
-      <div class="icons">
-        <v-btn icon>
-          <v-icon>mdi-magnify</v-icon>
-        </v-btn>
+      <v-app-bar color="light-green darken-3" dark prominent max-height="80">
+        <v-toolbar-title id="logo">
+          <router-link id="logo" to="/">
+            SWAPITO
+          </router-link>
+        </v-toolbar-title>
 
-        <v-btn icon>
-          <v-icon>mdi-heart-outline</v-icon>
-        </v-btn>
+        <div class="icons">
+          <v-btn icon>
+            <v-icon>mdi-magnify</v-icon>
+          </v-btn>
 
-        <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      </div>
+          <v-btn icon>
+            <v-icon>mdi-heart-outline</v-icon>
+          </v-btn>
 
+          <v-app-bar-nav-icon
+            @click.stop="drawer = !drawer"
+          ></v-app-bar-nav-icon>
+        </div>
+      </v-app-bar>
 
-    </v-app-bar>
+      <v-navigation-drawer v-model="drawer" absolute right temporary>
+        <v-list nav rounded>
+          <v-list-item-group
+            v-model="group"
+            active-class="light-green--text text--accent-4"
+          >
+            <v-list-item>
+              <v-list-item-title>
+                <router-link to="/">Domů</router-link>
+              </v-list-item-title>
+            </v-list-item>
 
-    <v-navigation-drawer
-      v-model="drawer"
-      absolute
-      right
-      temporary
-    >
-      <v-list
-        nav
-        rounded
+            <v-list-item>
+              <v-list-item-title>
+                <router-link to="/profile" v-if="userIsSignedIn"
+                  >Profil</router-link
+                >
+                <router-link to="/login" v-else>Přihlásit se</router-link>
+              </v-list-item-title>
+            </v-list-item>
 
-      >
-        <v-list-item-group
-          v-model="group"
-          active-class="light-green--text text--accent-4"
-        >
+            <v-list-item>
+              <v-list-item-title>
+                <router-link to="/form" v-if="userIsSignedIn"
+                  >Přidej inzerát</router-link
+                >
+              </v-list-item-title>
+            </v-list-item>
 
-          <v-list-item>
-            <v-list-item-title>
-              <router-link to="/">Domů</router-link>
-            </v-list-item-title>
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-title>
-              <router-link to="/profile" v-if="userIsSignedIn">Profil</router-link>
-              <router-link to="/login" v-else>Přihlásit se</router-link>
-            </v-list-item-title>
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-title>
-              <router-link to="/form" v-if="userIsSignedIn">Přidej inzerát</router-link>
-            </v-list-item-title>
-          </v-list-item>
-
-          <v-btn
-            class="ma-2"
-            outlined
-            color="gray"
-            v-if="userIsSignedIn" @click="signOut"
-            >Odhlásit se
+            <v-btn
+              class="ma-2"
+              outlined
+              color="gray"
+              v-if="userIsSignedIn"
+              @click="signOut"
+              >Odhlásit se
             </v-btn>
 
-          <v-list-item>
-            <v-list-item-title>
-              <router-link to="/privacy">Ochrana soukromí</router-link>
-            </v-list-item-title>
-          </v-list-item>
-           
-        </v-list-item-group>
-      </v-list>
-    </v-navigation-drawer>
-  </v-card>
+            <v-list-item>
+              <v-list-item-title>
+                <router-link to="/privacy">Ochrana soukromí</router-link>
+              </v-list-item-title>
+            </v-list-item>
+          </v-list-item-group>
+        </v-list>
+      </v-navigation-drawer>
+    </v-card>
   </div>
 </template>
 
@@ -92,23 +81,23 @@ import firebase from "firebase/app";
 export default {
   name: "Navbar",
 
-  data(){
-    return{
+  data() {
+    return {
       user: null,
       userIsSignedIn: false,
       drawer: false,
       group: null,
-    }
+    };
   },
 
   watch: {
-      group () {
-        this.drawer = false
-      },
+    group() {
+      this.drawer = false;
     },
+  },
 
   created() {
-    firebase.auth().onAuthStateChanged(user => {
+    firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.user = user;
         this.userIsSignedIn = true;
@@ -121,34 +110,35 @@ export default {
       firebase.auth().signOut();
       this.userIsSignedIn = false;
       this.$router.push({
-        name: "Login"
+        name: "Login",
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style>
-.navbar{
+.navbar {
   max-height: 120px;
   padding-bottom: 20px;
 }
 
-.v-sheet.v-card:not(.v-sheet--outlined){
-  box-shadow: none !important; 
+.v-sheet.v-card:not(.v-sheet--outlined) {
+  box-shadow: none !important;
 }
 
-.v-toolbar__content{
+.v-toolbar__content {
   justify-content: space-between;
 }
 
-#logo{
+#logo {
   align-self: flex-start;
   padding-top: 20px;
+  color: white;
+  text-decoration: none;
 }
 
-.icons{
+.icons {
   padding-top: 16px;
 }
-
 </style>

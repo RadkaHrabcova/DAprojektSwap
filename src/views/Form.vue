@@ -249,7 +249,6 @@ export default {
           email: firebase.auth().currentUser.email,
         }),
       }),
-        (this.savingSuccessful = true),
         this.clearForm(),
         (this.savingSuccessful = true);
     },

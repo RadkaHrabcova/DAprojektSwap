@@ -26,14 +26,16 @@
 
           <v-card-text v-show="show">
             <p>{{ ad.description }}</p>
-            <p>Vyměním za: {{ ad.exchange }}</p>
+            <p><strong>Vyměním za:</strong> {{ ad.exchange }}</p>
             <div>
               <v-icon>mdi-map-marker</v-icon>
-              <p>Lokalita: {{ ad.location }}</p>
+              <p>Lokalita:{{ ad.location }}</p>
             </div>
             <div v-if="userIsSignedIn">
               <v-icon>mdi-email</v-icon>
-              <p>Kontakt: {{ ad.email }}</p>
+              <p>
+                Kontakt:<strong> {{ ad.email }}</strong>
+              </p>
             </div>
           </v-card-text>
         </v-card>

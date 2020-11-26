@@ -88,7 +88,18 @@
           </v-btn>
 
           <v-card-text v-show="show">
-            {{ ad.description }}
+            <p>{{ ad.description }}</p>
+            <p><strong>Vyměním za: </strong> {{ ad.exchange }}</p>
+            <div>
+              <v-icon>mdi-map-marker</v-icon>
+              <p>Lokalita: {{ ad.location }}</p>
+            </div>
+            <div v-if="userIsSignedIn">
+              <v-icon>mdi-email</v-icon>
+              <p>
+                Kontakt: <strong> {{ ad.email }}</strong>
+              </p>
+            </div>
           </v-card-text>
         </v-card>
       </v-col>
@@ -156,7 +167,7 @@ export default {
             userPhoto: this.userPhoto,
             location: this.userLocation,
             searches: this.userSearches,
-            offers: this.userOffers
+            offers: this.userOffers,
           }),
         });
       }
