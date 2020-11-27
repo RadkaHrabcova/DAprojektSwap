@@ -192,31 +192,6 @@ export default {
   },
 
   created() {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        this.user = user;
-        this.userID = user.uid;
-        this.userName = user.displayName;
-        this.userEmail = user.email;
-        this.userPhoto = user.photoURL;
-
-        fetch("https://beta-swapito-main-sv1kp3pz6lex.herokuapp.com/user", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            userID: this.userID,
-            userName: this.userName,
-            userEmail: this.userEmail,
-            userPhoto: this.userPhoto,
-            location: this.userLocation,
-            searches: this.userSearches,
-            offers: this.userOffers,
-          }),
-        });
-      }
-    });
     this.fetchProfile();
     this.fetchAds();
   },

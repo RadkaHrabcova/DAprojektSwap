@@ -29,12 +29,12 @@
             <p><strong>Vyměním za:</strong> {{ ad.exchange }}</p>
             <div>
               <v-icon>mdi-map-marker</v-icon>
-              <p>Lokalita:{{ ad.location }}</p>
+              <p>{{ ad.location }}</p>
             </div>
             <div v-if="userIsSignedIn">
               <v-icon>mdi-email</v-icon>
               <p>
-                Kontakt:<strong> {{ ad.email }}</strong>
+                <strong> {{ ad.email }}</strong>
               </p>
             </div>
           </v-card-text>

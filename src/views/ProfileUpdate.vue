@@ -58,6 +58,7 @@
             v-model="searches"
             label="Hledám"
             counter
+            prepend-icon="mdi-magnify"
             maxlength="120"
             full-width
             outlined
@@ -67,6 +68,7 @@
             v-model="offers"
             label="Nabízím"
             counter
+            prepend-icon="mdi-hand-heart"
             maxlength="120"
             full-width
             outlined
@@ -171,7 +173,7 @@ export default {
            userEmail: this.userEmail
          })
        })
-       this.$router.push('/profile');
+       this.$router.push('/');
      } 
    },
 
